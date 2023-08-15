@@ -1,23 +1,32 @@
 import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+// import { reset } from 'nodemon';
 
 function App() {
+  const [count, setCount] = useState(0);
+  const increment= ()=> setCount(count+1);
+  const resetCount = ()=> setCount(0);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo"/>
-        <img src={logo} className="App-logo-r" alt="logo"/>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          You have clicked {count} times.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div className='buttons'>
+        <button type="button" id="click"
+          className="butt"
+          onClick={increment}
         >
-          Learn React
-        </a>
+          Click
+        </button>
+        <button type="button"
+          className="butt" id="reset"
+          onClick={resetCount}
+        >
+          Reset
+        </button></div> 
       </header>
     </div>
   );

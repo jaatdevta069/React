@@ -43,3 +43,31 @@
     transform: rotate(360deg);
   }
 }
+.butt{
+font-size: 15px;
+color: cornflowerblue;
+background-color: black;
+padding: 10px;
+margin: 2px;
+border-radius: 10px;
+transition: ease-in 100ms;
+}
+.butt:hover{
+cursor: pointer;
+font-size: 20px;
+color:aqua;  
+}
+.buttons{
+  align-items:center;
+  flex:content;
+  margin: 10px;
+  padding: 2px;
+  
+}
+#reset{
+  color:rgb(255, 0, 0);
+  background-color: rgb(120, 0, 0);
+}
+#reset:hover{
+color: white;  
+}
