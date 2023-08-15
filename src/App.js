@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
-// import { reset } from 'nodemon';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -10,7 +9,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
+      <div><div className='images'>
+        <img src={logo} className='App-logo' id="co" alt="logo"/>
+        <img src={logo} className='App-logo' id="rev" alt="logo"/></div>
+        <div className='imagesb'>
+        <img src={logo} className='App-logo' id="co" alt="logo"/>
+        <img src={logo} className='App-logo' id="rev" alt="logo"/></div></div>
         <p>
           You have clicked {count} times.
         </p>

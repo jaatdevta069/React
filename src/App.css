@@ -2,21 +2,28 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 50vmin;
-  pointer-events: none;
-}
-.App-logo-r {
-  height: 50vmin;
-  pointer-events: none;
-}
+/* .images{
+  justify-content: flex-start;
+} */
 
+.App-logo {
+  position: relative;
+  height: 200px;
+  pointer-events: none;
+}
+.imagesb{
+  /* height: 100px; */
+  margin-top: -90px;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 1s linear;
+  #co {
+    animation: App-logo-spin infinite 9s linear;
+    margin-right: -15%;
+
   }
-  .App-logo-r {
-    animation: App-logo-spin infinite 1s linear reverse;
+  #rev {
+    margin-left: -14%;
+    animation: App-logo-spin infinite 9s linear reverse;
   }
 }
 
@@ -44,18 +51,22 @@
   }
 }
 .butt{
-font-size: 15px;
+font-size: 18px;
 color: cornflowerblue;
 background-color: black;
 padding: 10px;
 margin: 2px;
+margin-right: 10px;
 border-radius: 10px;
+border-color: aliceblue;
+border-style: ridge;
+text-shadow: #61dafb;
+text-decoration: solid;
 transition: ease-in 100ms;
 }
 .butt:hover{
 cursor: pointer;
 font-size: 20px;
-color:aqua;  
 }
 .buttons{
   align-items:center;
