@@ -2,21 +2,23 @@ import logo from './logo.svg';
 import { useState ,useEffect} from 'react';
 import './App.css';
 import Box from './box';
-import {pushTask,removeTask} from './functions.js';
+import loaderIcon from './loader';
+import taskForm from './form';
+import {pushTask,removeTask,update,getTasks} from './functions.js';
 
 function App() { 
   const [hasData,setHasData] = useState(false);
   const [isUpdated,SetisUpdated] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
-  const [startIndex, setStartIndex] = useState(0);
+  const [startIndex, setStartIndex] = useState(1);
   const [count, setCount] = useState(0);
 
   useEffect(()=>{
     const data = async function(){
       try{
-      const fetchedtasks = await fetch("http://localhost:245/notes"+`?startIndex=${startIndex}`);
-      const naam =await fetchedtasks.json();
+      // const fetchedtasks = await fetch("http://localhost:245/notes"+`?startIndex=${startIndex}`);
+      const naam = await getTasks(startIndex);
       setHasData(true);
       setCount(naam.count);
       console.log(naam);
@@ -25,19 +27,31 @@ function App() {
     catch(error){
       console.log(error);
     }}
+
     data()
     console.log("refreshed");
-  },[startIndex]);
+  },[]);
 
-function prevPage(){
-  setStartIndex(startIndex-5);
+async function prevPage(){
+  SetisUpdated(false);
+  const updatedIndex = startIndex-5;
+  const newTasks = await getTasks(updatedIndex);
+  setTasks(newTasks.data);
+  setStartIndex(updatedIndex);
+  SetisUpdated(true);
 }
 
-function nextPage(){
-  setStartIndex(startIndex+5);
+async function nextPage(){
+  SetisUpdated(false);
+  const updatedIndex = startIndex+5;
+  const newTasks = await getTasks(updatedIndex);
+  setTasks(newTasks.data);
+  setStartIndex(updatedIndex);
+  SetisUpdated(true);
 }
 
- async function addTask1 (){
+ async function addTask1 (e){
+  e.preventDefault();
   SetisUpdated(false);
   const tsk = await pushTask(text);
   SetisUpdated(true);
@@ -47,20 +61,14 @@ function nextPage(){
  }
  const updateRemoved = (newValue)=>{
   setTasks(newValue);
+  setCount(count-1);
  }
 
-  const removeTask = async (id)=>{
+  const removeAllTask = async (id)=>{
     try{
-    const deletedItem = await fetch("http://localhost:245/notes",{method:"DELETE",
-  body:JSON.stringify({
-    id: null
-  }),
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }});
-  // setTasks(tasks.filter(e=>e._id!==id));
-  setTasks([]);
+    const deletedItem = removeTask(null);
+    setTasks([]);
+    setCount(0);
 }
   catch(error){console.log(error)}
 };
@@ -77,44 +85,29 @@ function nextPage(){
         <div className='imagesb' padding = '0px'>
         <img src={logo} className='App-logo' id="co" alt="logo"/>
         <img src={logo} className='App-logo' id="rev" alt="logo"/></div></div>
+        <loaderIcon />
         <div className='notesHeading'>NOTES</div></div>
-        
-          <div className='task-input'><input placeholder='--Enter something--'
-          value = {text}
-          type='text'
-          name = 'input'
-          onChange= {text => setText(text.target.value)}
-          />
-          
-          {isUpdated && <button type="button"
-          className="butt" id="click"
-          onClick={addTask1}
-        >
-          ADD
-        </button>} 
-         {!isUpdated && <svg class="progress circle-loader" width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="20" cy="20" r="15"/>
-		</svg> 
-        }
-        <button type="button"
-          className="butt" id="reset"
-          onClick={removeTask}
-        >
-          CLEAR
-        </button>
-        </div>
+        <taskForm 
+          text
+          setText
+          isUpdatedaddTask1
+          removeAllTask
+        />
         {hasData && tasks.length==0 && <h1>No items Available</h1>}
         {!hasData && <h1>...loading</h1>}
-        {hasData && Box(tasks,updateRemoved,startIndex)}
+        {hasData && <Box tasks ={tasks} 
+        updateRemoved= {updateRemoved}
+        start= {startIndex}
+        count={count}/>}
         {hasData && 
         <div className='paging'>
-          {startIndex > 0 &&
-            <button className='Page1' onClick={prevPage} >◀</button>}
-        <p className='number'>
-          {startIndex+1}-{startIndex + 5 < count? startIndex+5:count} / {count} tasks.
-        </p>
-        {startIndex + 5 < count &&
-        <button className='Page1' onClick={nextPage}>▶</button>}
+          {startIndex > 1 &&
+            <button className='Page1' onClick={prevPage} disabled={!isUpdated}>◀</button>}
+        { count>0 && <p className='number'>
+            {startIndex}-{startIndex + 4 < count? startIndex+4:count} / {count} tasks.
+        </p>}
+        {startIndex + 4 < count &&
+        <button className='Page1' onClick={nextPage} disabled={!isUpdated}>▶</button>}
         </div>}
       </header>
     </div>

@@ -1,4 +1,10 @@
 
+const getTasks = async(startIndex,batchSize)=>{
+const tasks = await fetch("http://localhost:245/notes"+`?startIndex=${startIndex}&batchSize=${batchSize ?? 5}`) ;
+const json = await tasks.json();
+return json;
+}
+
 const pushTask = async (text)=>{
     console.log(text);
     try{
@@ -22,7 +28,7 @@ const pushTask = async (text)=>{
     try{
     const deletedItem = await fetch("http://localhost:245/notes",{method:"DELETE",
   body:JSON.stringify({
-    id: id
+    id
   }),
   headers: {
     'Accept': 'application/json',
@@ -34,5 +40,23 @@ const pushTask = async (text)=>{
   catch(error){console.log(error)}
 };
 
+const update = async(id,task)=>{
+try {
+  const updatedTasks = await fetch("http://localhost:245/notes",{method:"PATCH",
+  body:JSON.stringify({
+    id,
+    task
+  }),
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }});
+  return updatedTasks
 
-export {pushTask,removeTask};
+} catch (error) {
+  console.log(error);
+  return error;
+}
+}
+
+export {pushTask,removeTask,update,getTasks};
