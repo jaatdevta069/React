@@ -1,10 +1,11 @@
 import React from 'react'
-// import './loader.css';
+import './loader.css';
 
-const loaderIcon = () => {
+const LoaderIcon = ({radius}) => {
+  const radi =radius ?? 25;
   return (
-    <div className = 'loaderIcon'> hello </div>
+    <div className = 'loaderIcon' style={{height:radi, width:radi}}></div>
   )
 }
 
-export default loaderIcon;
+export default LoaderIcon;

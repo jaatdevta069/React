@@ -1,35 +1,40 @@
-import React from 'react'
+import React from "react";
+import LoaderIcon from "./loader";
 
-const taskForm = ({text,setText,isUpdated,addTask1,removeAllTask}) => {
+const TaskForm = ({ text, setText, isUpdated = true, addTask1, removeAllTask }) => {
   return (
     <form onSubmit={addTask1}>
-          <div className='task-input'><input placeholder='--Enter something--'
-          value = {text}
+      <div className="task-input">
+        <input
+          placeholder="Enter something"
+          value={text}
           autoFocus
-          type='text'
-          name = 'input'
-          onChange= {e => setText(e.target.value)}
-          />
-          
-          {isUpdated && <button type="button"
-          className="butt" id="click"
-          onClick={addTask1} disabled={!text}
+          type="text"
+          name="input"
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button
+          type="button"
+          className="butt"
+          id="click"
+          onClick={addTask1}
+          disabled={!text}
         >
-          ADD
-        </button>} 
-         {!isUpdated && <svg class="progress circle-loader" width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="20" cy="20" r="15"/>
-		</svg> 
-        }
-        <button type="button"
-          className="butt" id="reset"
+          {isUpdated ? "ADD" : <LoaderIcon radius={3} />}
+        </button>
+        <button
+          type="button"
+          className="butt"
+          id="reset"
           onClick={removeAllTask}
         >
-          CLEAR
+          {/* {isUpdated ?  */}
+          {"CLEAR"} 
+           {/* : <LoaderIcon radius={3} /> */}
         </button>
-        </div>
-        </form>
-  )
-}
+      </div>
+    </form>
+  );
+};
 
-export default taskForm;
+export default TaskForm;

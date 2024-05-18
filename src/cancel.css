@@ -1,0 +1,13 @@
+*{margin: 0px;}
+.cancel{
+     display: flex;
+     justify-content: end; 
+}
+.cross-forword{
+    position: absolute;
+    transform: rotate(92deg);
+}
+
+.cancel:hover{
+    cursor: pointer;
+}

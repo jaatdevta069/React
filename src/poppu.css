@@ -1,0 +1,25 @@
+
+.popup-content {
+    margin: auto;
+    background-image: linear-gradient(
+		-45deg,
+		var(--color-accent-1),
+		var(--color-accent-2)
+	);
+  border-color: hsl(193, 93%, 22%);
+  box-shadow:  rgba(255, 255, 255) 10px 10px;
+  border-radius: 5px;       
+    width:fit-content;
+    height:auto;
+    padding: 10px 10px 15px 10px;
+  }
+
+  .popup-overlay {
+    height: fit-content;
+    width:fit-content;
+    background: rgba(21, 186, 35, 0.5);
+  }
+
+  .popup-arrow {
+    color: transparent
+  }
