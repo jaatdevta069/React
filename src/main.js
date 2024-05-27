@@ -8,6 +8,7 @@ const Main = () => {
   const [ tasks, setTasks ] = useState([]);
   const [hasData, setHasData] = useState(false);
   const [startIndex, setStartIndex] = useState(1);
+  const [date, setDate] = useState(new Date());
   const count = useRef(0);
 
   console.log("aaya hai");
@@ -15,7 +16,7 @@ const Main = () => {
   useEffect(() => {
     const data = async function () {
       try {
-        const naam = await getTasks(startIndex ?? 1);
+        const naam = await getTasks(date, startIndex ?? 1);
         count.current = naam.count;
         setTasks(naam.data);
         console.log(naam.data);
@@ -27,8 +28,9 @@ const Main = () => {
     };
     data();
     console.log("refreshed");
-  }, []);
+  }, [date]);
 
+  // return <Login />
   const rout = createBrowserRouter([
     { path: "/login", element: <Login /> },
     {
@@ -42,6 +44,8 @@ const Main = () => {
           startIndex={startIndex}
           setStartIndex = {setStartIndex}
           count={count}
+          date= {date}
+          setDate ={setDate}
         />
       )},
       {path:"*",

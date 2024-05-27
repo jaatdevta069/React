@@ -1,25 +1,33 @@
 .container{
-    display: flex;
-    width: 100%;
+    display: grid;
     height: 100%;
-    flex-wrap: wrap;
-    border-color: aliceblue;
+    grid-template-rows: repeat(10,60px);
+    grid-template-columns: repeat(17,60px);
+    grid-auto-rows: auto;
+    border: 2px solid gold;
+    border-radius: 12px;
+    padding: 2px;
 }
 .cells{
+    position: relative;
     border-radius: 5px;
+    display: flex;
+    font-size: 2em;
+    align-items: center;
+    justify-content: center;
     height: 55px;
     width: 55px;
-    margin: 4px;
+    margin: 3px;
     background-color: rgba(255, 251, 251, 0.099);
     border-color: #8a2be2;
-    transition: 1.5s;
+    /* transition: 1.5s; */
 }
 
 .cells:hover{
       /* animation: fade 1s linear infinite; */
-      background-color: hsla(160, 100%, 75%, 1);
+      /* background-color: hsla(160, 100%, 75%, 1);
       transition: 0s;
-      transform: rotateZ(360deg);
+      transform: rotateZ(360deg); */
 }
 @keyframes fade {
     from{
@@ -29,3 +37,30 @@
         transform: rotateZ(0deg);
     }
 }
+
+.flex{
+    padding: 20px;
+}
+.play{
+    font-size: 2em;
+    align-self: flex-start;
+    flex: 1 1;
+}
+
+.name{
+    color: gold;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 5em;
+    font-weight: bolder;
+    cursor: default;
+}
+
+div > .resume {
+    position: relative;
+    font-size: 4em;
+    padding: 0px;
+    margin: 0px 5px;
+    cursor: pointer;
+    top: -10px;
+    }

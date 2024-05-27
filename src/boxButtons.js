@@ -11,10 +11,11 @@ const BoxButtons = ({
   update,
   id,
   condition,
-  radius
+  radius,
+  hide
 }) => {
   return (
-    <div className="container" id={id}>
+    <div className="container" id={id} style={{display:(hide ? "none":"block")}}>
       <button className="cta" onClick={() => update(id)} 
       style={{ backgroundColor: backgroundColor ?? "grey",
        height:radius, 

@@ -21,3 +21,24 @@ code {
     place-items: center;
     height: 6em;
 }
+
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.butt{
+  font-size: 18px;
+  color: cornflowerblue;
+  background-color: black;
+  padding: 10px;
+  margin: 2px;
+  margin-right: 10px;
+  border-radius: 10px;
+  border-color: aliceblue;
+  border-style: ridge;
+  text-shadow: #61dafb;
+  text-decoration: solid;
+  transition: ease-in 100ms;
+  }

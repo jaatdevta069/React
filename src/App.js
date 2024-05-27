@@ -1,20 +1,30 @@
 import TaskForm from "./form";
-import { useState, useRef} from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 import Box from "./box";
 import { pushTask, removeTask, getTasks } from "./functions.js";
 import Redirect from "./login/redirect.js";
 
-function App({tasks, setTasks, hasData, setHasData,startIndex, setStartIndex,count}) {
+function App({
+  tasks,
+  setTasks,
+  hasData,
+  setHasData,
+  startIndex,
+  setStartIndex,
+  count,
+  date,
+  setDate
+}) {
   const isUpdated = useRef(true);
   const [text, setText] = useState("");
 
-  console.log('rendered '+window.location.pathname);
+  // console.log("rendered " + window.location.pathname);
 
   async function prevPage() {
     isUpdated.current = false;
     const updatedIndex = startIndex - 5;
-    const newTasks = await getTasks(updatedIndex);
+    const newTasks = await getTasks(date, updatedIndex);
     setTasks(newTasks.data);
     setStartIndex(updatedIndex);
     isUpdated.current = true;
@@ -23,33 +33,32 @@ function App({tasks, setTasks, hasData, setHasData,startIndex, setStartIndex,cou
   async function nextPage() {
     isUpdated.current = false;
     const updatedIndex = startIndex + 5;
-    const newTasks = await getTasks(updatedIndex);
+    const newTasks = await getTasks(date, updatedIndex);
     setTasks(newTasks.data);
     setStartIndex(updatedIndex);
     isUpdated.current = true;
   }
 
   async function addTask1(e) {
-    try{
-    e.preventDefault();
-    isUpdated.current = false;
-    const tsk = await pushTask(text);
-    isUpdated.current = true;
-    if (startIndex === 1) {
-    setTasks([tsk, ...tasks.slice(0, 4)]);}
-else{
-  setStartIndex(1);
-  const newTasks = await getTasks(1);
-  setTasks(newTasks.data);
-}
-  }catch(khot){
-    console.log(khot);
+    try {
+      e.preventDefault();
+      isUpdated.current = false;
+      const tsk = await pushTask(text);
+      isUpdated.current = true;
+      if (startIndex === 1) {
+        setTasks([tsk, ...tasks.slice(0, 4)]);
+      } else {
+        setStartIndex(1);
+        const newTasks = await getTasks(1);
+        setTasks(newTasks.data);
+      }
+    } catch (khot) {
+      console.log(khot);
+    } finally {
+      count.current = count.current + 1;
+      setText("");
+    }
   }
-finally{
-  count.current = count.current + 1;
-  setText("");
-}
-}
 
   const updateRemoved = (newValue) => {
     setTasks(newValue);
@@ -64,21 +73,21 @@ finally{
       count.current = 0;
     } catch (error) {
       console.log(error);
-    }
-    finally{
+    } finally {
       isUpdated.current = true;
     }
   };
 
   return (
     <div className="App">
-      <Redirect path={"/login"}/>
+      <Redirect path={"/login"} />
       <header className="App-header">
         <div className="heading">
-          {/* <AppLogo /> */}
           <div className="notesHeading">TODO </div>
         </div>
         <TaskForm
+          date={date}
+          setDate={setDate}
           text={text}
           setText={setText}
           isUpdated={isUpdated}
@@ -89,7 +98,8 @@ finally{
         {!hasData && <h1>...loading</h1>}
         {hasData && (
           <Box
-          setTasks={setTasks}
+            date={date}
+            setTasks={setTasks}
             tasks={tasks}
             updateRemoved={updateRemoved}
             start={startIndex}
@@ -109,8 +119,11 @@ finally{
             )}
             {count.current > 0 && (
               <p className="number">
-                {startIndex}-{startIndex + 4 < count.current ? startIndex + 4 : count.current} /{" "}
-                {count.current} tasks.
+                {startIndex}-
+                {startIndex + 4 < count.current
+                  ? startIndex + 4
+                  : count.current}{" "}
+                / {count.current} tasks.
               </p>
             )}
             {startIndex + 4 < count.current && (

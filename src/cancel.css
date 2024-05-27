@@ -2,12 +2,21 @@
 .cancel{
      display: flex;
      justify-content: end; 
+     filter: drop-shadow(2px 4px 6px black);
+     margin: 10px;
+     margin-bottom: 12px;
+}
+.icon{
+    transform: scale(1.8);
 }
 .cross-forword{
     position: absolute;
-    transform: rotate(92deg);
+    transform: rotate(92deg) scale(1.8);
 }
 
 .cancel:hover{
     cursor: pointer;
+}
+abbr[title] {
+    text-decoration: none;
 }
