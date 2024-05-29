@@ -2,17 +2,17 @@ import { memo, useEffect, useMemo, useRef, useState } from "react";
 import "./login.css";
 import "../index.css";
 import 'boxicons';
-// import Redirect from "./redirect";
+import Redirect from "./redirect";
 
 let rows = 11;
 let columns = 17;
-let qu = [];
 let keyMap = {
-  ArrowDown: -2,
+  ArrowDown: 2,
   ArrowUp: 2,
-  ArrowLeft: -1,
+  ArrowLeft: 1,
   ArrowRight: 1
 };
+let qu = [];
 let speed = 50;
 let border = ["5px", "50px", "50px", "5px"]
 
@@ -21,6 +21,7 @@ function Login() {
     return new Array(columns * rows).fill(0);
   }, [rows]);
   const trail = useRef(4);
+  const que = useRef([]);
   const [pause, setpause] = useState(false);
   const keyPressed = useRef(null);
   const [id1, setid1] = useState(0);
@@ -38,6 +39,14 @@ function Login() {
         keyPress();
         console.log("run boi");
       }, 500 -(speed * Math.floor(trail.current/4)));
+      if (qu.includes(id1) && !collison.current && !pause && !gameOver) {
+        setgameOver(true);
+        reset();
+        console.log("over");
+      }
+      if (!gameOver && !pause) {
+        updatedQueue();
+      }
       return () => {
         clearInterval(interval.current);
       };
@@ -52,17 +61,7 @@ function Login() {
       qu.push(id1);
     }
   };
-
-  if (qu.includes(id1) && !collison.current && !pause &&!gameOver) {
-    setgameOver(true);
-    reset();
-    console.log("over");
-  }
-
-  if (!gameOver && !pause) {
-    updatedQueue();
-  }
-
+  
   function addTrail() {
     trail.current++;
   }
@@ -82,7 +81,7 @@ function Login() {
   function moveThis(event) {
     event.preventDefault();
     collison.current =
-      Math.abs((keyMap[event.key] + keyMap[keyPressed.current]) % 2) === 0;
+      (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
     if (collison.current) {
     } else {
       keyPressed.current = event.key;
@@ -149,7 +148,7 @@ function Login() {
         <div className="flex">
           <div className="flex play name">SNAKE</div>
           <div className="container">
-            {/* <Redirect path={"/"} /> */}
+            <Redirect path={"/"} />
             {arr.map((id, index) => {
               return (
                 <div
@@ -188,4 +187,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default memo(Login);
