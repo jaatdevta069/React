@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import App from "./App";
 import Login from "./login/login";
-import { RouterProvider, createBrowserRouter ,Link} from "react-router-dom";
+import { RouterProvider, createBrowserRouter,Link} from "react-router-dom";
 import { getTasks } from "./functions.js";
 
 const Main = () => {
@@ -31,7 +31,7 @@ const Main = () => {
   }, [date]);
 
   // return <Login />
-  const rout = createBrowserRouter([
+  const rout = createBrowserRouter([ 
     { path: "/login", element: <Login /> },
     {
       path: "/",
@@ -54,7 +54,7 @@ const Main = () => {
         </Link>
         </div>
     },
-  ]);
+  ])
   return <RouterProvider router={rout} />;
 };
 

@@ -9,6 +9,6 @@ const name = document.getElementById("root").title.replace("Gorira");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <Login/>
+  <Main/>
   // </React.StrictMode>
 );
