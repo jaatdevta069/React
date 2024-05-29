@@ -61,7 +61,7 @@ function Login() {
       qu.push(id1);
     }
   };
-  
+
   function addTrail() {
     trail.current++;
   }
@@ -124,7 +124,7 @@ function Login() {
         break;
 
       default:
-        console.log("kuch or daba");
+        console.log("kuch or daba bhosya ke");
         break;
     }
   }
