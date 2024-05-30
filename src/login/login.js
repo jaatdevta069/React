@@ -96,6 +96,7 @@ function Login() {
   function moveThis(event) {
     event.preventDefault();
       collison.current = (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
+      console.log(pause)
         if (collison.current || pause) {
         } else {
           let jj = (directions.indexOf(event.key) + directions.indexOf(keyPressed.current))%2
