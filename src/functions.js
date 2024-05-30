@@ -26,7 +26,7 @@ const removeTask = async (id) => {
   try {
     const deletedItem = await api.delete(`/${id}`);
       console.log(deletedItem.data);
-    return deletedItem.data;
+    // return deletedItem.data;
   } catch (error) {
     console.log(error);
   }
@@ -39,7 +39,7 @@ const updateTask = async (id, task, isCompleted) => {
         task,
         isCompleted,
       });
-    return updateTask?.data;
+    return updatedTasks?.data;
   } catch (error) {
     console.log(error);
     return error;

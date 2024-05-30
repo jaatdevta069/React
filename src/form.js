@@ -1,6 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import LoaderIcon from "./loader";
-import Popup from "./popup";
+import Pop from "./popup";
 import Calender from "./login/calender";
 const TaskForm = ({
   text,
@@ -56,7 +56,7 @@ const TaskForm = ({
           </button>
         </div>
       </form>
-      <Popup
+      <Pop
         child={<Calender date={date} setdate={setDate} />}
         trigger={
           <button className="butt calbutt">{`${date.getDate()} ${

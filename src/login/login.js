@@ -17,17 +17,16 @@ let directions = [
   'ArrowRight',
   'ArrowUp',
   'ArrowDown']
-let qu = [];
+// let qu = [];
 let speed = 50;
 let border = ["5px", "50px", "50px", "5px"]
+const arr = new Array(columns * rows).fill(0);
 
 function Login() {
-  const arr = useMemo(() => {
-    return new Array(columns * rows).fill(0);
-  }, [rows]);
+  const borderRef = useRef(border.slice())
   const trail = useRef(4);
-  const que = useRef([]);
   const [pause, setpause] = useState(false);
+  const que = useRef([]);
   const keyPressed = useRef(null);
   const [id1, setid1] = useState(0);
   const interval = useRef(null);
@@ -38,12 +37,19 @@ function Login() {
   const collison = useRef(false);
   const [gameOver, setgameOver] = useState(false);
   
-  console.log(id1)
+  useEffect(() => {
+    document.addEventListener("keydown", moveThis);
+    console.log("mounted");
+    return () => {
+      document.removeEventListener("keydown", moveThis);
+    };
+  }, []);
+
   useEffect(() => {
     if (keyPressed.current && !pause) {
       interval.current = setInterval(() => {
         keyPress();
-        console.log("run boi");
+        // console.log("run boi");
       }, 500 -(speed * Math.floor(trail.current/4)));
       return () => {
         clearInterval(interval.current);
@@ -52,30 +58,30 @@ function Login() {
   }, [id1, pause]);
   
   const updatedQueue = () => {
-    if (qu.length < trail.current) {
-      qu.push(id1);
+    if (que.current.length < trail.current) {
+      que.current.push(id1);
     } else {
-      qu.shift();
-      qu.push(id1);
+      que.current.shift();
+      que.current.push(id1);
     }
   };
 
-  if (qu.includes(id1) && qu.length > 3 && !collison.current && !pause && !gameOver) {
+  if (que.current.includes(id1) && !collison.current && !pause && !gameOver) {
     setgameOver(true);
     reset();
     console.log("over");
   }
   if (!gameOver && !pause) {
-    console.log('updated')
+    // console.log('updated')
     updatedQueue();
   }
   const rotateRight = ()=>{
-    border.push(border[0])
-     border.shift()
+    borderRef.current.push(borderRef.current[0])
+    borderRef.current.shift()
     }
 
   const rotateLeft = ()=>{
-    border.unshift(border.pop());
+    borderRef.current.unshift(borderRef.current.pop());
   }
 
 
@@ -87,24 +93,14 @@ function Login() {
     addTrail();
   }
 
-  useEffect(() => {
-    document.addEventListener("keydown", moveThis);
-    console.log("mounted");
-    return () => {
-      document.removeEventListener("keydown", moveThis);
-    };
-  }, []);
-
   function moveThis(event) {
     event.preventDefault();
-    
-      collison.current =
-        (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
-        if (collison.current) {
+      collison.current = (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
+        if (collison.current || pause) {
         } else {
-          let jj = (directions.indexOf(event.key)+directions.indexOf(keyPressed.current))%2
-          if(keyPressed.current || event.key!= 'ArrowRight'){
-            if((directions.indexOf(event.key)>1 && jj === 0 )|| (directions.indexOf(event.key)<2 && jj != 0 )){
+          let jj = (directions.indexOf(event.key) + directions.indexOf(keyPressed.current))%2
+          if(keyPressed.current || event.key !== 'ArrowRight'){
+            if((directions.indexOf(event.key)>1 && jj === 0 )|| (directions.indexOf(event.key)<2 && jj !== 0 )){
               rotateLeft()
             }
             else{
@@ -118,9 +114,9 @@ function Login() {
   function reset() {
     keyPressed.current = null;
     trail.current = 4;
-    console.log(qu);
+    // console.log(que.current);
     setid1(0);
-    console.log(id1);
+    // console.log(id1);
   }
 
   function keyPress() {
@@ -150,7 +146,7 @@ function Login() {
         break;
 
       default:
-        console.log("kuch or daba bhosya ke");
+        console.log("kuch or daba");
         break;
     }
   }
@@ -162,7 +158,8 @@ function Login() {
           <div
             onClick={() => {
               setgameOver(false)
-              qu = []
+              que.current = []
+              borderRef.current = border.slice()
             }}
             style={{ color: "gold", cursor: "pointer" }}
           >
@@ -179,9 +176,9 @@ function Login() {
               return (
                 <div
                   style={
-                    qu.includes(index)
+                    que.current.includes(index)
                       ? {
-                          borderRadius: index === id1 ? border.join(' ') : "5px",
+                          borderRadius: index === id1 ? borderRef.current.join(' ') : "5px",
                           backgroundColor: `hsla(160, 100%, ${
                             index === id1 ? 50 : 75
                           }%, ${1}`,

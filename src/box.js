@@ -10,8 +10,8 @@ const Box = ({ tasks, updateRemoved, start, count, setTasks ,date}) => {
     console.log(id + " yahi hai");
     setUpdatingId(id);
     try {
-      const deleted = await removeTask(id);
-      const updated = tasks.filter((data) => data.id != id);
+      await removeTask(id);
+      const updated = tasks.filter((data) => data.id !== id);
       if (start + 4 < count) {
         const nextTask = await getTasks(date,start + 4, 1);
         console.table(nextTask.data);

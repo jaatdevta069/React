@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import './poppu.css';
 import Cancel from './cancel';
 
-export default ({child,trigger}) => (
+const Pop = ({child,trigger}) => (
   <Popup trigger={trigger ?? (<button> Trigger</button>)} 
   position="bottom left">
 {close=>(
@@ -13,3 +13,4 @@ export default ({child,trigger}) => (
     {child}</>)}
   </Popup>
 );
+export default Pop;

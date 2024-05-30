@@ -68,7 +68,7 @@ function App({
   const removeAllTask = async (id) => {
     isUpdated.current = false;
     try {
-      const deletedItem = removeTask(null);
+      await removeTask(null);
       setTasks([]);
       count.current = 0;
     } catch (error) {
@@ -94,7 +94,7 @@ function App({
           addTask1={addTask1}
           removeAllTask={removeAllTask}
         />
-        {hasData && (tasks.length ?? 0) == 0 && <h1>No items Available</h1>}
+        {hasData && (tasks.length ?? 0) === 0 && <h1>No items Available</h1>}
         {!hasData && <h1>...loading</h1>}
         {hasData && (
           <Box
