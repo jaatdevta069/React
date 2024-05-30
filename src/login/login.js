@@ -12,6 +12,11 @@ let keyMap = {
   ArrowLeft: 1,
   ArrowRight: 1
 };
+let directions = [
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown']
 let qu = [];
 let speed = 50;
 let border = ["5px", "50px", "50px", "5px"]
@@ -33,26 +38,19 @@ function Login() {
   const collison = useRef(false);
   const [gameOver, setgameOver] = useState(false);
   
+  console.log(id1)
   useEffect(() => {
     if (keyPressed.current && !pause) {
       interval.current = setInterval(() => {
         keyPress();
         console.log("run boi");
       }, 500 -(speed * Math.floor(trail.current/4)));
-      if (qu.includes(id1) && !collison.current && !pause && !gameOver) {
-        setgameOver(true);
-        reset();
-        console.log("over");
-      }
-      if (!gameOver && !pause) {
-        updatedQueue();
-      }
       return () => {
         clearInterval(interval.current);
       };
     }
   }, [id1, pause]);
-
+  
   const updatedQueue = () => {
     if (qu.length < trail.current) {
       qu.push(id1);
@@ -61,6 +59,25 @@ function Login() {
       qu.push(id1);
     }
   };
+
+  if (qu.includes(id1) && qu.length > 3 && !collison.current && !pause && !gameOver) {
+    setgameOver(true);
+    reset();
+    console.log("over");
+  }
+  if (!gameOver && !pause) {
+    console.log('updated')
+    updatedQueue();
+  }
+  const rotateRight = ()=>{
+    border.push(border[0])
+     border.shift()
+    }
+
+  const rotateLeft = ()=>{
+    border.unshift(border.pop());
+  }
+
 
   function addTrail() {
     trail.current++;
@@ -80,13 +97,22 @@ function Login() {
 
   function moveThis(event) {
     event.preventDefault();
-    collison.current =
-      (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
-    if (collison.current) {
-    } else {
-      keyPressed.current = event.key;
-      keyPress();
-    }
+    
+      collison.current =
+        (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
+        if (collison.current) {
+        } else {
+          let jj = (directions.indexOf(event.key)+directions.indexOf(keyPressed.current))%2
+          if(keyPressed.current || event.key!= 'ArrowRight'){
+            if((directions.indexOf(event.key)>1 && jj === 0 )|| (directions.indexOf(event.key)<2 && jj != 0 )){
+              rotateLeft()
+            }
+            else{
+              rotateRight()  
+              }}
+          keyPressed.current = event.key;
+          keyPress();
+        }
   }
 
   function reset() {
@@ -155,7 +181,7 @@ function Login() {
                   style={
                     qu.includes(index)
                       ? {
-                          borderRadius: index === id1 ? "50px" : "5px",
+                          borderRadius: index === id1 ? border.join(' ') : "5px",
                           backgroundColor: `hsla(160, 100%, ${
                             index === id1 ? 50 : 75
                           }%, ${1}`,
