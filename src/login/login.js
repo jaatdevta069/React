@@ -17,7 +17,6 @@ let directions = [
   'ArrowRight',
   'ArrowUp',
   'ArrowDown']
-// let qu = [];
 let speed = 50;
 let border = ["5px", "50px", "50px", "5px"]
 const arr = new Array(columns * rows).fill(0);
@@ -37,24 +36,25 @@ function Login() {
   const collison = useRef(false);
   const [gameOver, setgameOver] = useState(false);
   
+  // console.log(que.current)
   useEffect(() => {
     document.addEventListener("keydown", moveThis);
     console.log("mounted");
     return () => {
       document.removeEventListener("keydown", moveThis);
     };
-  }, []);
+  }, [pause]);
 
   useEffect(() => {
+    // keyPressed.current = (pause && !keyPressed.current) ? 'ArrowRight': keyPressed.current;
     if (keyPressed.current && !pause) {
       interval.current = setInterval(() => {
         keyPress();
-        // console.log("run boi");
       }, 500 -(speed * Math.floor(trail.current/4)));
-      return () => {
-        clearInterval(interval.current);
-      };
     }
+    return () => {
+      clearInterval(interval.current);
+    };
   }, [id1, pause]);
   
   const updatedQueue = () => {
@@ -72,7 +72,6 @@ function Login() {
     console.log("over");
   }
   if (!gameOver && !pause) {
-    // console.log('updated')
     updatedQueue();
   }
   const rotateRight = ()=>{
@@ -96,7 +95,6 @@ function Login() {
   function moveThis(event) {
     event.preventDefault();
       collison.current = (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
-      console.log(pause)
         if (collison.current || pause) {
         } else {
           let jj = (directions.indexOf(event.key) + directions.indexOf(keyPressed.current))%2
@@ -115,13 +113,10 @@ function Login() {
   function reset() {
     keyPressed.current = null;
     trail.current = 4;
-    // console.log(que.current);
     setid1(0);
-    // console.log(id1);
   }
 
   function keyPress() {
-    // console.log('yaha hu');
     switch (keyPressed.current) {
       case "ArrowDown":
         setid1((prev) => {
@@ -181,8 +176,8 @@ function Login() {
                       ? {
                           borderRadius: index === id1 ? borderRef.current.join(' ') : "5px",
                           backgroundColor: `hsla(160, 100%, ${
-                            index === id1 ? 50 : 75
-                          }%, ${1}`,
+                            50 - (0.7*que.current.indexOf(index))
+                          }%,1)`
                         }
                       : {}
                   }
@@ -200,8 +195,8 @@ function Login() {
               if(keyPressed.current){
               setpause(!pause);
               if(pause) keyPress()
-              console.log('Gunnight');
-            }}}>
+              console.log('Gunnight');}
+            }}>
           {<box-icon name={!keyPressed.current || pause ? 'play':'pause'} size = '5em' color='gold' ></box-icon>
           }</div>
 

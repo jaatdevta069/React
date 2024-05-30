@@ -59,6 +59,7 @@
 div > .resume {
     position: relative;
     font-size: 4em;
+    left: -21px;
     padding: 0px;
     margin: 0px 5px;
     cursor: pointer;
