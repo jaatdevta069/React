@@ -2,7 +2,7 @@
     display: grid;
     height: 100%;
     grid-template-rows: repeat(10,60px);
-    grid-template-columns: repeat(17,60px);
+    grid-template-columns: repeat(17, 60px);
     grid-auto-rows: auto;
     border: 2px solid gold;
     border-radius: 12px;

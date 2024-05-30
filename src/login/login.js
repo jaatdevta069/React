@@ -36,18 +36,22 @@ function Login() {
   const collison = useRef(false);
   const [gameOver, setgameOver] = useState(false);
   
-  // console.log(que.current)
+  if (que.current.includes(id1) && !collison.current && !pause && !gameOver) {
+    setgameOver(true);
+    reset();
+    console.log("over");
+  }
   useEffect(() => {
     document.addEventListener("keydown", moveThis);
     console.log("mounted");
     return () => {
       document.removeEventListener("keydown", moveThis);
     };
-  }, [pause]);
+  }, [pause,gameOver]);
 
   useEffect(() => {
     // keyPressed.current = (pause && !keyPressed.current) ? 'ArrowRight': keyPressed.current;
-    if (keyPressed.current && !pause) {
+    if (keyPressed.current && !pause && !gameOver) {
       interval.current = setInterval(() => {
         keyPress();
       }, 500 -(speed * Math.floor(trail.current/4)));
@@ -66,11 +70,6 @@ function Login() {
     }
   };
 
-  if (que.current.includes(id1) && !collison.current && !pause && !gameOver) {
-    setgameOver(true);
-    reset();
-    console.log("over");
-  }
   if (!gameOver && !pause) {
     updatedQueue();
   }
@@ -83,7 +82,6 @@ function Login() {
     borderRef.current.unshift(borderRef.current.pop());
   }
 
-
   function addTrail() {
     trail.current++;
   }
@@ -95,7 +93,8 @@ function Login() {
   function moveThis(event) {
     event.preventDefault();
       collison.current = (keyMap[event.key] - keyMap[keyPressed.current]) === 0;
-        if (collison.current || pause) {
+        if (collison.current || pause || gameOver ||!directions.includes(event.key)) {
+          console.log('gaand mara')
         } else {
           let jj = (directions.indexOf(event.key) + directions.indexOf(keyPressed.current))%2
           if(keyPressed.current || event.key !== 'ArrowRight'){
@@ -117,6 +116,7 @@ function Login() {
   }
 
   function keyPress() {
+    if(!gameOver)
     switch (keyPressed.current) {
       case "ArrowDown":
         setid1((prev) => {
@@ -140,7 +140,6 @@ function Login() {
           return (prev + 1) % columns === 0 ? prev - (columns - 1) : prev + 1;
         });
         break;
-
       default:
         console.log("kuch or daba");
         break;
