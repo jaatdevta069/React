@@ -41,25 +41,28 @@ function Login() {
     reset();
     console.log("over");
   }
+  console.log(id1)
   useEffect(() => {
     document.addEventListener("keydown", moveThis);
     console.log("mounted");
     return () => {
       document.removeEventListener("keydown", moveThis);
     };
-  }, [pause,gameOver]);
+  }, [pause, gameOver]);
 
   useEffect(() => {
     // keyPressed.current = (pause && !keyPressed.current) ? 'ArrowRight': keyPressed.current;
     if (keyPressed.current && !pause && !gameOver) {
       interval.current = setInterval(() => {
         keyPress();
+        console.log("interval running")
       }, 500 -(speed * Math.floor(trail.current/4)));
     }
     return () => {
+      console.log('interval cleared' )
       clearInterval(interval.current);
     };
-  }, [id1, pause]);
+  }, [keyPressed.current, pause, gameOver]);
   
   const updatedQueue = () => {
     if (que.current.length < trail.current) {
