@@ -1,25 +1,47 @@
-import TaskForm from "./form";
-import { useState, useRef } from "react";
-import "./App.css";
-import Box from "./box";
+import TaskForm from "./form.js";
+import { useState, useRef, useEffect, useContext } from "react";
+import Box from "./box.js";
+import { useNavigate } from "react-router-dom";
 import { pushTask, removeTask, getTasks } from "./functions.js";
-import Redirect from "./login/redirect.js";
+import Redirect from "./redirect.js";
+import {authContext} from '../context.js';
+import useIterceptor from "../axios/iterceptor.js";
 
-function App({
-  tasks,
-  setTasks,
-  hasData,
-  setHasData,
-  startIndex,
-  setStartIndex,
-  count,
-  date,
-  setDate
-}) {
+function App() {
+  const api = useIterceptor();
+  const {auth} = useContext(authContext);
+  const navigate = useNavigate();
   const isUpdated = useRef(true);
   const [text, setText] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [hasData, setHasData] = useState(false);
+  const [startIndex, setStartIndex] = useState(1);
+  const [date, setDate] = useState(new Date());
+  const count = useRef(0);
 
-  // console.log("rendered " + window.location.pathname);
+console.log('notes page');
+
+  useEffect(() => {
+    if(!auth){
+      // console.log('redirect');
+      navigate('/auth');
+    }
+    console.log(`auth in task page ${auth}`)
+    const data = async function () {
+      try {
+        const naam = await getTasks(date, startIndex ?? 1);
+        count.current = naam.count;
+        setTasks(naam.data);
+        console.log(naam.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setHasData(true);
+      }
+    };
+    data();
+    console.log("refreshed");
+  }, [date]);
 
   async function prevPage() {
     isUpdated.current = false;
@@ -49,7 +71,7 @@ function App({
         setTasks([tsk, ...tasks.slice(0, 4)]);
       } else {
         setStartIndex(1);
-        const newTasks = await getTasks(1);
+        const newTasks = await getTasks(api,1);
         setTasks(newTasks.data);
       }
     } catch (khot) {
@@ -80,7 +102,7 @@ function App({
 
   return (
     <div className="App">
-      <Redirect path={"/login"} />
+      <Redirect path={"/snake"} />
       <header className="App-header">
         <div className="heading">
           <div className="notesHeading">TODO </div>

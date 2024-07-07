@@ -1,0 +1,150 @@
+.loginBox {
+  height: auto;
+  width: fit-content;
+  border-radius: 5px;
+  border: 2px solid rgb(1, 109, 109);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px) brightness(1.4);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login {
+  height: 100vh;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(91 22 22) 61%,
+    rgb(14 89 104) 100%
+  );
+}
+
+.creds {
+  margin: 5px 0px 0px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  gap: 2px;
+}
+
+.credFields {
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  opacity: 0.7;
+  width: -webkit-fill-available;
+}
+
+.credFields:focus {
+  outline: none;
+  border: 3px solid rgb(190, 162, 0);
+}
+.credLabels {
+  font-family: auto;
+  color: #db9562;
+  flex: 1;
+  font-size: 1.2em;
+  font-weight: bolder;
+}
+
+.visibility {
+  position: absolute;
+  cursor: pointer;
+  right: 5px;
+  bottom: 7px;
+  filter: drop-shadow(2px 4px 2px black);
+}
+
+.loginButton {
+  width: -webkit-fill-available;
+  margin: 9px;
+  cursor: pointer;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #fff;
+  border: 2px solid #6c0400 ;
+  background-color: #b12f2b;
+  padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 1.5px 0px;
+  font-weight: 800;
+  font-size: 16px;
+  height: 42px;
+  transition: 300ms;
+}
+
+.loginButton:not(:disabled):hover {
+  background-color: #a7110c;
+}
+
+.loginButton:active{
+  filter: brightness(1.8);
+  transform: scale(1.1);
+}
+
+
+.flex .loginbut {
+  justify-content: end;
+  margin: 5px 2px 15px;
+}
+
+.banner {
+  color: bisque;
+  font-size: 3em;
+  text-align: center;
+  font-family: monospace;
+  font-weight: bold;
+  margin-top: 11px;
+}
+
+.alertBanner {
+  width: min(319px,auto);
+  gap: 5px;
+  height: auto;
+  margin: 7px 12px -20px;
+  padding: 5px;
+  color: white;
+  background-color: #a2161680;
+  border-radius: 10px;
+}
+
+.closeAlert {
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: gray;
+  padding: 4px;
+  width: 21px;
+  text-align: center;
+}
+
+.closeAlert:hover {
+  background-color: rgb(88, 87, 87);
+}
+
+.message {
+  flex: 1;
+  text-align: center;
+}
+
+label > sup {
+  color: #ff4742;
+}
+
+.loginform {
+  padding: 34px;
+  padding-bottom: 22px;
+  margin-top: -8px;
+}
+
+.registerlink {
+  color: #fff;
+}
+
+.inputChild{
+  position: relative;
+}

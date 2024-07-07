@@ -39,7 +39,7 @@ const Box = ({ tasks, updateRemoved, start, count, setTasks ,date}) => {
     <div className="nameGrid" id="grid">
       {tasks.map((data, index) => (
         <div className="checkDiv" key={data.id}>
-          <div className="boxs" key={index}>
+          <div className="boxs boxShadow" key={index}>
             <div
               className="task"
               key={data.id}
@@ -51,16 +51,23 @@ const Box = ({ tasks, updateRemoved, start, count, setTasks ,date}) => {
             >
               {index + start + ". " + data.task}
             </div>
+            
             <div className="box_buttons" key={index}>
+            <Checkbox
+            id={data.id}
+            task={data.task}
+            isCompleted={data.isCompleted}
+            checkTask={checkTask}
+          />
               <BoxButtons
                 text={"DELETE"}
-                icon={"🗑️"}
+                icon={'trash'}
                 update={update}
                 id={data.id}
                 backgroundColor={"rgb(158, 72, 52)"}
                 condition={updatingId === data.id}
               />
-              <BoxButtons
+              {/* <BoxButtons
                 hide={true}
                 text={"EDIT"}
                 icon={"✒️"}
@@ -68,15 +75,9 @@ const Box = ({ tasks, updateRemoved, start, count, setTasks ,date}) => {
                 backgroundColor={"rgb(58, 142, 52)"}
                 condition={updatingId === data.id}
                 id={data.id}
-              />
+              /> */}
             </div>
           </div>
-          <Checkbox
-            id={data.id}
-            task={data.task}
-            isCompleted={data.isCompleted}
-            checkTask={checkTask}
-          />
         </div>
       ))}
     </div>

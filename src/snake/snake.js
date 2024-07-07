@@ -1,8 +1,8 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import "./login.css";
+import "./snake.css";
 import "../index.css";
 import 'boxicons';
-import Redirect from "./redirect";
+import Redirect from "../task/redirect.js";
 
 let rows = 11;
 let columns = 17;
@@ -21,7 +21,7 @@ let speed = 50;
 let border = ["5px", "50px", "50px", "5px"]
 const arr = new Array(columns * rows).fill(0);
 
-function Login() {
+function Snake() {
   const borderRef = useRef(border.slice())
   const trail = useRef(4);
   const [pause, setpause] = useState(false);
@@ -38,6 +38,7 @@ function Login() {
   
   if (que.current.includes(id1) && !collison.current && !pause && !gameOver) {
     setgameOver(true);
+    clearInterval(interval.current)
     reset();
     console.log("over");
   }
@@ -55,7 +56,7 @@ function Login() {
     if (keyPressed.current && !pause && !gameOver) {
       interval.current = setInterval(() => {
         keyPress();
-        console.log("interval running")
+        // console.log("interval running")
       }, 500 -(speed * Math.floor(trail.current/4)));
     }
     return () => {
@@ -152,7 +153,7 @@ function Login() {
   return (
     <>
       {gameOver && (
-        <div className="notFound">
+        <div className="notFound bold">
           <div
             onClick={() => {
               setgameOver(false)
@@ -169,7 +170,7 @@ function Login() {
         <div className="flex">
           <div className="flex play name">SNAKE</div>
           <div className="container">
-            <Redirect path={"/"} />
+            <Redirect path={"/task"} />
             {arr.map((id, index) => {
               return (
                 <div
@@ -208,4 +209,4 @@ function Login() {
   );
 }
 
-export default memo(Login);
+export default memo(Snake);

@@ -1,0 +1,20 @@
+:root{
+    --height:14px;
+}
+.loader{
+    height:var(--height);
+    aspect-ratio:1/1;
+    border: calc(var(--height)/2) solid rgb(255, 255, 255);
+    border-radius:50%;
+    border-top:calc(var(--height)/2) solid red;
+    animation: rotate 2s linear infinite;
+  }
+  
+  @keyframes rotate{
+    from{
+      transform: rotate(0deg);
+    }
+    to{
+      transform: rotate(360deg);
+    }
+  }

@@ -3,10 +3,10 @@ import './checkBox.css'
 
 const Checkbox = ({isCompleted,checkTask,id,task}) => {
   return (
-    <div className="checkbox-wrapper-63">
-  <label className="switch">
+    <div className="checkbox">
+  <label className="checkboxL">
     <input type="checkbox" checked ={isCompleted} onChange={()=>{checkTask(id,task,!isCompleted)}}/>
-    <span className="slider"></span>
+    {/* <span className="slider"></span> */}
   </label>
 </div>
   )

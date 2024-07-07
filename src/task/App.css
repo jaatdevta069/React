@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2&family=Calligraffitti&display=swap');
 
 *{
-  font-family: cursive;
+  font-family: sans-serif;
 }
 
 .App {
@@ -33,16 +33,10 @@
   border-style:unset;
   display: flex;
   justify-content: space-between;
-  background-image: linear-gradient(
-		-45deg,
-		var(--color-accent-1),
-		var(--color-accent-2)
-	);
-  border-color: hsl(193, 93%, 22%);
-  margin: 10px;
+  margin: 0px 10px;
+  background-color: hsl(220, 13%, 26%);
   margin-bottom: 1px;
   color: aliceblue;
-  box-shadow: rgba(240, 235, 235, 100) 3px 3px 5px;
   border-radius:10px;
 }
 
@@ -83,7 +77,6 @@
     1px 1px 0px #EF5097, 
     3px 3px 0px #6868AC, 
     5px 5px 0px #90B1E0;
-  
 }
 
 .heading{
@@ -191,7 +184,7 @@ font-size: 20px;
   padding: 19px 16px;
   transition: all 0.1s ease 0s;
 }
-input[type="text"]{
+.taskInput {
   border: 3px solid rgb(103, 69, 130);
   font-size: 1.2rem;
   padding: 10px;
@@ -199,7 +192,7 @@ input[type="text"]{
   margin-right: 19px;
   border-width: thick;
 }
-input[type="text"]::placeholder{
+.taskInput input[type="text"]::placeholder{
   text-align: center;
 }
 #reset{
@@ -215,6 +208,7 @@ color: #ffffff;
   font-weight: bold;
   margin-right: 20px;
   display: flex;
+  align-items: center;
   justify-content: start;
 }
 .button{
@@ -257,10 +251,9 @@ color: #ffffff;
 }
 
 .box_buttons{
+  align-items: center;
   display: flex;
-  align-items: start;
-  margin-left: 10px;
-  flex-direction: row-reverse;
+  gap: 8px;
 }
 
 .boxButton{
@@ -293,6 +286,7 @@ background-color: rgb(212, 20, 20);
 }
 
 .checkDiv{
+  margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
